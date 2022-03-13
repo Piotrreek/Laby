@@ -390,7 +390,6 @@ int main()
             text.setFont(font);
             text.setCharacterSize(12);
             text.setFillColor(sf::Color::White);
-            std::cout << sign_clicked;
             text.setPosition(730, 615);
             text.setString(sign_clicked);
         }
