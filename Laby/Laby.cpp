@@ -253,6 +253,7 @@ int main()
             {
                 if (event.key.code == sf::Keyboard::Escape) window.close();
                 else { is_key_pressed = true; sign_clicked = fromKtoS(event.key.code); }
+                if (is_mouse_button_pressed == true) { line[0].color = sf::Color::Transparent; line[1].color = sf::Color::Transparent; rectangle.setFillColor(sf::Color::Transparent); rectangle.setOutlineColor(sf::Color::Transparent); circle.setOutlineColor(sf::Color::Transparent); circle.setFillColor(sf::Color::Transparent); }
             }
             if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) { begin.x = event.mouseButton.x; begin.y = event.mouseButton.y; is_mouse_button_pressed = true; }
             if (event.type == sf::Event::MouseMoved) { move.x = event.mouseMove.x; move.y = event.mouseMove.y; }
