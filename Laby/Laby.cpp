@@ -257,8 +257,7 @@ int main()
             }
             if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) { begin.x = event.mouseButton.x; begin.y = event.mouseButton.y; is_mouse_button_pressed = true; }
             if (event.type == sf::Event::MouseMoved) { move.x = event.mouseMove.x; move.y = event.mouseMove.y; }
-            if (event.type == sf::Event::MouseButtonReleased) { is_mouse_button_pressed = false; buffer.draw(line); buffer.draw(rectangle); buffer.draw(circle); buffer.draw(circle); }
-            
+            if (event.type == sf::Event::MouseButtonReleased) { is_mouse_button_pressed = false; buffer.draw(line); buffer.draw(rectangle); buffer.draw(circle); }
         }
         //Draw BEGIN
         buffer.display();
@@ -296,12 +295,19 @@ int main()
         {
         	line[0].position = begin;     line[0].color = outline_color;
             line[1].position = move;      line[1].color = outline_color;
+            rectangle.setOutlineColor(sf::Color::Transparent);
+            rectangle.setFillColor(sf::Color::Transparent);
+            circle.setFillColor(sf::Color::Transparent);
+            circle.setOutlineColor(sf::Color::Transparent);
         }
 
         // prostokat wypelniony
 
         if(sign_clicked == "a" && is_mouse_button_pressed)
         {
+            line[0].color = sf::Color::Transparent; line[1].color = sf::Color::Transparent;
+            circle.setFillColor(sf::Color::Transparent);
+            circle.setOutlineColor(sf::Color::Transparent);
             if(move.x < begin.x && move.y < begin.y)
             {
                 rectangle.setPosition(move);
@@ -331,6 +337,9 @@ int main()
 
         if (sign_clicked == "r" && is_mouse_button_pressed)
         {
+            line[0].color = sf::Color::Transparent; line[1].color = sf::Color::Transparent;
+            circle.setFillColor(sf::Color::Transparent);
+            circle.setOutlineColor(sf::Color::Transparent);
             if (move.x < begin.x && move.y < begin.y)
             {
                 rectangle.setPosition(move);
@@ -360,6 +369,9 @@ int main()
 
         if(sign_clicked == "c" && is_mouse_button_pressed)
         {
+            rectangle.setOutlineColor(sf::Color::Transparent);
+            rectangle.setFillColor(sf::Color::Transparent);
+            line[0].color = sf::Color::Transparent; line[1].color = sf::Color::Transparent;
             float radius = sqrt(pow(move.x - begin.x, 2) + pow(move.y - begin.y, 2)) / 2;
             circle.setRadius(radius);
             circle.setOutlineColor(outline_color);
