@@ -95,19 +95,20 @@ public:
             {
                 r = sqrtf(static_cast<float>(x) * x + y * y);
                 a = fmodf(atan2f(static_cast<float>(y), x) * 57.29577951f + 180, 360);
-                // if (r <= 125) {
                 tmp[0] = a; tmp[1] = r * 0.008; tmp[2] = _input_value;
-                switch (_choice) {
-                case 1: convert_hsl(tmp, rgb); break;
-                case 2: convert_hsv(tmp, rgb); break;
-                case 3: convert_cmy(tmp, rgb); break;
-                case 4: convert_rgb(tmp, rgb); break;
-                }
-                _pixels[4 * ((125 + y) * _size + 125 - x) + 0] = static_cast<sf::Uint8>(rgb[0]);
-                _pixels[4 * ((125 + y) * _size + 125 - x) + 1] = static_cast<sf::Uint8>(rgb[1]);
-                _pixels[4 * ((125 + y) * _size + 125 - x) + 2] = static_cast<sf::Uint8>(rgb[2]);
-                _pixels[4 * ((125 + y) * _size + 125 - x) + 3] = 255;
-                // }
+                if (r < 125) 
+                {
+                    switch (_choice) {
+                    case 1: convert_hsl(tmp, rgb); break;
+                    case 2: convert_hsv(tmp, rgb); break;
+                    case 3: convert_cmy(tmp, rgb); break;
+                    case 4: convert_rgb(tmp, rgb); break;
+                    }
+                    _pixels[4 * ((125 + y) * _size + 125 - x) + 0] = static_cast<sf::Uint8>(rgb[0]);
+                    _pixels[4 * ((125 + y) * _size + 125 - x) + 1] = static_cast<sf::Uint8>(rgb[1]);
+                    _pixels[4 * ((125 + y) * _size + 125 - x) + 2] = static_cast<sf::Uint8>(rgb[2]);
+                    _pixels[4 * ((125 + y) * _size + 125 - x) + 3] = 255;
+				}
             }
         }
         _texture->update(_pixels);
@@ -216,8 +217,13 @@ int main()
                 && event.mouseButton.x <= 740 && event.mouseButton.y >= 60 && event.mouseButton.y <= 315)
             {
                 mouse_pressed = true;
+                val = event.mouseButton.y - 60;
                 line[0].position = sf::Vector2f(690, event.mouseButton.y);
                 line[1].position = sf::Vector2f(750, event.mouseButton.y);
+                hslCircle.SetInputValue(static_cast<float>(val) / 255);
+                hsvCircle.SetInputValue(static_cast<float>(val) / 255);
+                rgbCircle.SetInputValue(static_cast<float>(val) / 255);
+                cmyCircle.SetInputValue(static_cast<float>(val) / 255);
             }
             if (event.type == sf::Event::MouseMoved && mouse_pressed == true && event.mouseMove.x >= 700
                 && event.mouseMove.x <= 740 && event.mouseMove.y >= 60 && event.mouseMove.y <= 315)
@@ -264,7 +270,6 @@ int main()
             frame_counter = 0;
         }
         frame_counter++;
-
         window.display();
     }
     return 0;
